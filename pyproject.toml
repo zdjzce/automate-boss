@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "automate-boss"
+version = "0.1.0"
+description = ""
+authors = ["zdjce923 <493904954@qq.com>"]
+readme = "README.md"
+packages = [{include = "automate_boss"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+selenium = "^4.8.3"
+webdriver-manager = "^3.8.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

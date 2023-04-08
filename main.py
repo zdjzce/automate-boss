@@ -56,18 +56,28 @@ def communicate(driver):
     for item in jd_list_items:
         link_href = item.find_element(By.TAG_NAME, "a").get_attribute('href')
         driver.execute_script('window.open("{}","_blank");'.format(link_href))
-        
+
+        # 聚焦当前 tab 否则找不到元素
+        win_handle = driver.window_handles
+        driver.switch_to.window(win_handle[1])
+
         # TODO 优化为dom加载完成
         """ wait_communicate = WebDriverWait(driver, 10).until(
             ec.visibility_of_element_located((By.XPATH, '//*[@id="main"]/div[3]/div[2]/a'))) """
-        time.sleep(10)
+            
+        time.sleep(5)
         driver.find_element(
             By.XPATH, '//*[@id="main"]/div[3]/div[2]/a').click()
 
         driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/input').send_keys(
             '您好，我有两年的前端开发经验，熟练掌握JS，HTML，CSS。擅长Vue+TS、了解Vite，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
-        time.sleep(2)
+        time.sleep(1)
+        driver.find_element(
+            By.XPATH, '/html/body/div[1]/div[4]/button').click()
+        time.sleep(1)
         driver.close()
+        time.sleep(1)
+        driver.switch_to.window(win_handle[0])
         # driver.find_element(By.TAG_NAME, 'body').send
 
 

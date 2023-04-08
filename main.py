@@ -76,10 +76,10 @@ def communicate(driver):
 
         driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/input').send_keys(
             '您好，我有两年的前端开发经验，熟练掌握JS，HTML，CSS。擅长Vue+TS、了解Vite，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
-        time.sleep(3)
+        time.sleep(5)
         driver.find_element(
             By.XPATH, '/html/body/div[1]/div[4]/button').click()
-        time.sleep(3)
+        time.sleep(4)
         driver.close()
         time.sleep(1)
         driver.switch_to.window(win_handle[0])

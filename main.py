@@ -40,9 +40,6 @@ def init_login(driver):
         By.XPATH, '//*[@id="wrap"]/div[2]/div[3]/div[2]/div[1]/form/div[7]/input').click()
 
 
-session_file = 'browser_session.data'
-
-
 def communicate(driver):
     read_more = driver.find_element(
         By.XPATH, '//*[@id="main"]/div[3]/div[2]/div')
@@ -64,15 +61,15 @@ def communicate(driver):
         # TODO 优化为dom加载完成
         """ wait_communicate = WebDriverWait(driver, 10).until(
             ec.visibility_of_element_located((By.XPATH, '//*[@id="main"]/div[3]/div[2]/a'))) """
-            
-        time.sleep(3)
+
+        time.sleep(8)
         try:
             driver.find_element(
-              By.XPATH, '//*[@id="main"]/div[3]/div[2]/a').click()
+                By.XPATH, '//*[@id="main"]/div[3]/div[2]/a').click()
         except:
-            time.sleep(4)
+            time.sleep(8)
             driver.find_element(
-              By.XPATH, '//*[@id="main"]/div[3]/div[2]/a').click()
+                By.XPATH, '//*[@id="main"]/div[3]/div[2]/a').click()
 
         driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/input').send_keys(
             '您好，我有两年的前端开发经验，熟练掌握JS，HTML，CSS。擅长Vue+TS、了解Vite，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')

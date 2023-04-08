@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 def get_options():
@@ -10,7 +12,8 @@ def get_options():
         'mobileEmulation', {'deviceName': 'iPhone XR'})
     # 设置 user-data-dir chrome会加载此配置 里面包含了用户的 cookie
     # 如果自定义的user-data-dir文件夹 登录获取验证会失败 暂时使用第一次启动的文件夹 通过 chrome://version 查看目录 保持登录状态
-    options.add_argument("user-data-dir=C:\\Program Files (x86)\\scoped_dir15408_969916617")
+    options.add_argument(
+        "user-data-dir=C:\\Program Files (x86)\\scoped_dir15408_969916617")
     # 获取本地提前启动好的chrome调试服务，之后打开同一个实例，否则每次打开都是新的
     options.add_argument("--remote-debugging-port=9444")
     return options
@@ -39,23 +42,44 @@ def init_login(driver):
 
 session_file = 'browser_session.data'
 
+
 def communicate(driver):
-  read_more = driver.find_element(By.XPATH, '//*[@id="main"]/div[3]/div[2]/div')
-  while not elementHasClass(read_more, 'disabled'):
-      driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-      time.sleep(2)
-  jd_list = driver.fined_element(By.XPATH, '//*[@id="main"]/div[3]/div[2]/ul')
+    read_more = driver.find_element(
+        By.XPATH, '//*[@id="main"]/div[3]/div[2]/div')
+    while not elementHasClass(read_more, 'disabled'):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        # time.sleep(1)
+
+    jd_list = driver.find_element(
+        By.XPATH, '//*[@id="main"]/div[3]/div[2]/ul')
+    jd_list_items = jd_list.find_elements(By.TAG_NAME, "li")
+    for item in jd_list_items:
+        link_href = item.find_element(By.TAG_NAME, "a").get_attribute('href')
+        driver.execute_script('window.open("{}","_blank");'.format(link_href))
+        
+        # TODO 优化为dom加载完成
+        """ wait_communicate = WebDriverWait(driver, 10).until(
+            ec.visibility_of_element_located((By.XPATH, '//*[@id="main"]/div[3]/div[2]/a'))) """
+        time.sleep(10)
+        driver.find_element(
+            By.XPATH, '//*[@id="main"]/div[3]/div[2]/a').click()
+
+        driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/input').send_keys(
+            '您好，我有两年的前端开发经验，熟练掌握JS，HTML，CSS。擅长Vue+TS、了解Vite，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
+        time.sleep(2)
+        driver.close()
+        # driver.find_element(By.TAG_NAME, 'body').send
 
 
 def elementHasClass(element, active):
-  class_str = element.get_attribute('class')
-  return active in class_str
+    class_str = element.get_attribute('class')
+    return active in class_str
 
 
 def create_driver():
     driver = webdriver.Chrome(chrome_options=get_options())
     driver.set_window_size(415, 1100)
-    driver.implicitly_wait(4)
+    driver.implicitly_wait(2)
     time.sleep(2)
     driver.get('https://www.zhipin.com/beijing/')
     communicate(driver=driver)

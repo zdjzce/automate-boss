@@ -12,8 +12,7 @@ def get_options():
         'mobileEmulation', {'deviceName': 'iPhone XR'})
     # 设置 user-data-dir chrome会加载此配置 里面包含了用户的 cookie
     # 如果自定义的user-data-dir文件夹 登录获取验证会失败 暂时使用第一次启动的文件夹 通过 chrome://version 查看目录 保持登录状态
-    options.add_argument(
-        "user-data-dir=C:\\Program Files (x86)\\scoped_dir15408_969916617")
+    options.add_argument("user-data-dir=C:\Program Files (x86)\scoped_dir11640_450606398")
     # 获取本地提前启动好的chrome调试服务，之后打开同一个实例，否则每次打开都是新的
     options.add_argument("--remote-debugging-port=9444")
     return options
@@ -53,7 +52,7 @@ def communicate(driver):
                 By.XPATH, '//*[@id="main"]/div[3]/div[2]/a').click()
 
         driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/input').send_keys(
-            '您好，我有两年的前端开发经验，熟练掌握JS，HTML，CSS。擅长Vue+TS、了解Vite，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
+            '您好，我有两年的前端开发经验，熟练掌握JS，HTML，CSS。擅长Vue+TS、了解Vite，Vitest，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
         time.sleep(5)
         driver.find_element(
             By.XPATH, '/html/body/div[1]/div[4]/button').click()

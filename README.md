@@ -23,10 +23,15 @@
    ```
   在打开的BOSS直聘页面中进行登录。登录完毕以后请勿关闭浏览器窗口。 
 
-4. 在浏览器中新建一个标签页，输入 chrome://version，打开页面后复制个人资料路径。将复制的路径黏贴到代码第十五行中的路径。把数字后面的路径都删除掉。如图：
+4. 在浏览器中新建一个标签页，输入 chrome://version，打开页面后复制个人资料路径。  
+   ![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/info-dir.jpg)  
+
+   将复制的路径黏贴到代码第十五行中的路径。把数字后面的路径都删除掉。  
+
+   如图：![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/delete.jpg)
    同时把注释关掉
    ```
-   options.add_argument("user-data-dir=把复制的路径放在这里")
+   options.add_argument("user-data-dir=把复制的路径放在这里") 
    ```
    把 29 行 time.sleep 中注释也关掉。
 5. 重新运行 poetry run python main.py。发现已经登录且页面开始自动滚动，即成功。

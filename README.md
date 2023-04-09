@@ -1,4 +1,6 @@
-## 使用介绍
+## 项目介绍
+BOSS海投自动打招呼脚本，只需简单的更改即可使用。
+## 如何使用
 效果如下：
 ![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/自动投递.gif)
 1. 克隆项目，安装依赖。
@@ -38,3 +40,6 @@
    把 29 行 time.sleep 中注释也关掉。
 5. 重新运行 poetry run python main.py。发现已经登录且页面开始自动滚动，即成功。
 6. 运行后如果发现没有成功登录，请从第二步开始重新执行。
+
+TODO
+1. 优化为简单的客户端，输入手机号与验证码点击按钮即可使用。

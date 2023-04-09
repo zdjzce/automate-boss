@@ -1,8 +1,8 @@
 ## 项目介绍
 BOSS海投自动打招呼脚本，只需简单的更改即可使用。
-## 如何使用
 效果如下：
 ![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/自动投递.gif)
+## 如何使用
 1. 克隆项目，安装依赖。
    需要的依赖：
    1. Python3：如果没有 Python3 请移步官网进行下载。版本为^3.11。https://www.python.org/downloads/

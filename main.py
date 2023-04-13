@@ -13,9 +13,9 @@ def get_options():
     # 设置 user-data-dir chrome会加载此配置 里面包含了用户的 cookie
     # 如果自定义的user-data-dir文件夹 登录获取验证会失败 暂时使用第一次启动的文件夹 通过 chrome://version 查看目录 保持登录状态
     options.add_argument(
-        "user-data-dir=C:\Program Files (x86)\scoped_dir11640_450606398")
+        "user-data-dir=C:\Program Files (x86)\scoped_dir14260_210738244")
     # 获取本地提前启动好的chrome调试服务，之后打开同一个实例，否则每次打开都是新的
-    options.add_argument("--remote-debugging-port=9444")
+    options.add_argument("--remote-debugging-port=9224")
     return options
 
 

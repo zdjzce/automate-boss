@@ -51,14 +51,14 @@ def communicate(driver):
             except:
                 driver.find_element(
                     By.XPATH, '//*[@id="container"]/div/div/div[1]/div[2]/div[2]/div/ul/li[1]').click()
-                time.sleep(2)
+                time.sleep(4)
                 driver.find_element(By.XPATH, '//*[@id="container"]/div/div/div[2]/div[3]/div/div[2]').send_keys(
                     '您好，我对JS，HTML，CSS较为擅长。熟悉Vue+TS、了解Vite，Vitest，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
                 time.sleep(4)
                 driver.find_element(
                     By.XPATH, '//*[@id="container"]/div/div/div[2]/div[3]/div/div[3]/button').click()
 
-        time.sleep(2)
+        time.sleep(4)
         driver.close()
         time.sleep(2)
         driver.switch_to.window(win_handle[0])

@@ -31,7 +31,7 @@ def communicate(driver):
         win_handle = driver.window_handles
         driver.switch_to.window(win_handle[1])
 
-        time.sleep(8)
+        time.sleep(6)
 
         communicate_btn = driver.find_element(
             By.XPATH, '//*[@id="main"]/div[1]/div/div/div[1]/div[3]/div[1]/a[2]')
@@ -40,7 +40,7 @@ def communicate(driver):
             print('xxxxxxxxxxxxxxx')
             communicate_btn.click()
 
-            time.sleep(7)
+            time.sleep(6)
             try:
                 driver.find_element(
                     By.XPATH, '/html/body/div[11]/div[2]/div[2]/div/div[1]/div[2]/textarea').send_keys(
@@ -54,7 +54,7 @@ def communicate(driver):
                 time.sleep(2)
                 driver.find_element(By.XPATH, '//*[@id="container"]/div/div/div[2]/div[3]/div/div[2]').send_keys(
                     '您好，我对JS，HTML，CSS较为擅长。熟悉Vue+TS、了解Vite，Vitest，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
-                time.sleep(1)
+                time.sleep(4)
                 driver.find_element(
                     By.XPATH, '//*[@id="container"]/div/div/div[2]/div[3]/div/div[3]/button').click()
 

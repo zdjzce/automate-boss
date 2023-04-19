@@ -9,13 +9,14 @@ def get_options():
     options = webdriver.ChromeOptions()
     options.add_experimental_option('detach', True)  # 不自动关闭浏览器
     options.add_argument(
-        "user-data-dir=C:\Program Files (x86)\scoped_dir14532_2004228020")
+        "user-data-dir=C:\Program Files (x86)\scoped_dir260_1638156569")
 
-    options.add_argument("--remote-debugging-port=9104")
+    options.add_argument("--remote-debugging-port=9154")
     return options
 
 
 def communicate(driver):
+    time.sleep(10)
     job_list = driver.find_element(
         By.XPATH, '//*[@id="container"]/div[1]/div/div[3]/div/ul').find_elements(By.CLASS_NAME, "job-card-wrapper")
     print('job_list', job_list)
@@ -31,7 +32,7 @@ def communicate(driver):
         win_handle = driver.window_handles
         driver.switch_to.window(win_handle[1])
 
-        time.sleep(16)
+        time.sleep(12)
 
         communicate_btn = driver.find_element(
             By.XPATH, '//*[@id="main"]/div[1]/div/div/div[1]/div[3]/div[1]/a[2]')
@@ -51,10 +52,10 @@ def communicate(driver):
             except:
                 driver.find_element(
                     By.XPATH, '//*[@id="container"]/div/div/div[1]/div[2]/div[2]/div/ul/li[1]').click()
-                time.sleep(4)
+                time.sleep(10)
                 driver.find_element(By.XPATH, '//*[@id="container"]/div/div/div[2]/div[3]/div/div[2]').send_keys(
                     '您好，我对JS，HTML，CSS较为擅长。熟悉Vue+TS、了解Vite，Vitest，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
-                time.sleep(4)
+                time.sleep(2)
                 driver.find_element(
                     By.XPATH, '//*[@id="container"]/div/div/div[2]/div[3]/div/div[3]/button').click()
 
@@ -65,7 +66,8 @@ def communicate(driver):
 
     driver.find_element(
         By.XPATH, '//*[@id="container"]/div[1]/div/div[3]/div/div/div/div/a[10]').click()
-    time.sleep(17)
+    time.sleep(8)
+    print('递归调用communicate')
     communicate(driver)
 
 
@@ -80,7 +82,7 @@ def create_driver():
     driver.implicitly_wait(2)
     time.sleep(2)
     driver.get('https://www.zhipin.com/web/geek/recommend?sortType=2')
-    time.sleep(15)
+    time.sleep(30)
     communicate(driver=driver)
     return driver
 

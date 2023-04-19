@@ -22,19 +22,26 @@ def get_options():
 # TODO login的滑块验证开发成本太高
 
 def communicate(driver):
-  
+
     read_more = driver.find_element(
     By.XPATH, '//*[@id="main"]/div[3]/div[2]/div')
     read_more = driver.find_element(By.XPATH,'//*[@id="main"]/div/div')
-    while not elementHasClass(read_more, 'disabled'):
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-        time.sleep(2)
+    # while not elementHasClass(read_more, 'disabled'):
+        # driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        # time.sleep(2)
 
     jd_list = driver.find_element(
         By.XPATH, '//*[@id="main"]/div[3]/div[2]/ul')
     jd_list_items = jd_list.find_elements(By.TAG_NAME, "li")
     for item in jd_list_items:
+        titleText = item.find_element(By.CLASS_NAME, "title-text").get_attribute('innerText')
+        noWeb = not 'web' in titleText
+        noFront = not '前端' in titleText
+        if noWeb and noFront :
+          continue
+
         link_href = item.find_element(By.TAG_NAME, "a").get_attribute('href')
+        
         item.find_element(By.TAG_NAME, "a").find_elements(By.CLASS_NAME, "job-card-wrapper")
         driver.execute_script('window.open("{}","_blank");'.format(link_href))
 

@@ -26,9 +26,9 @@ def communicate(driver):
     read_more = driver.find_element(
     By.XPATH, '//*[@id="main"]/div[3]/div[2]/div')
     read_more = driver.find_element(By.XPATH,'//*[@id="main"]/div/div')
-    # while not elementHasClass(read_more, 'disabled'):
-        # driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-        # time.sleep(2)
+    while not elementHasClass(read_more, 'disabled'):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(2)
 
     jd_list = driver.find_element(
         By.XPATH, '//*[@id="main"]/div[3]/div[2]/ul')
@@ -64,7 +64,7 @@ def communicate(driver):
 
         driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/input').send_keys(
             '您好，我对JS，HTML，CSS较为擅长。熟悉Vue+TS、了解Vite，Vitest，小程序开发，对Node，Python有过实践，积极参与开源项目，想应聘前端开发岗位，可以沟通一下吗？')
-        time.sleep(4)
+        time.sleep(5)
         driver.find_element(
             By.XPATH, '/html/body/div[1]/div[4]/button').click()
         time.sleep(4)

@@ -22,9 +22,7 @@ def get_options():
 # TODO login的滑块验证开发成本太高
 
 def communicate(driver):
-    # driver.find_element(By.XPATH, '//*[@id="wrap"]/div[3]/div[1]/form/p/input').send_keys('前端')
-    # time.sleep(1)
-    # driver.find_element(By.XPATH, '//*[@id="wrap"]/div[3]/div[1]/form/p/button').click()
+  
     read_more = driver.find_element(
     By.XPATH, '//*[@id="main"]/div[3]/div[2]/div')
     read_more = driver.find_element(By.XPATH,'//*[@id="main"]/div/div')

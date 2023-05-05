@@ -13,9 +13,9 @@ def get_options():
     # 设置 user-data-dir chrome会加载此配置 里面包含了用户的 cookie
     # 如果自定义的user-data-dir文件夹 登录获取验证会失败 暂时使用第一次启动的文件夹 通过 chrome://version 查看目录 保持登录状态
     options.add_argument(
-        "user-data-dir=C:\Program Files (x86)\scoped_dir13660_229141341")
+        "user-data-dir=/private/var/folders/jz/hpmf14910h5d7sxh_3v42rxm0000gn/T/.com.google.Chrome.ecmRyT")
     # 获取本地提前启动好的chrome调试服务，之后打开同一个实例，否则每次打开都是新的
-    options.add_argument("--remote-debugging-port=9121")
+    options.add_argument("--remote-debugging-port=9231")
     return options
 
 
@@ -36,9 +36,21 @@ def communicate(driver):
     for item in jd_list_items:
         titleText = item.find_element(
             By.CLASS_NAME, "title-text").get_attribute('innerText')
+        
+        workSpace = item.find_element(By.CLASS_NAME, "workplace").get_attribute('innerText')
+
+        salary = item.find_element(By.CLASS_NAME, "salary").get_attribute('innerText')
+        salarySlice = salary[0:2]
+
+        notBeijing = not '北京' in workSpace
         noWeb = not 'web' in titleText
         noFront = not '前端' in titleText
-        if noWeb and noFront:
+        # hasReact = 'react' in titleText
+        # hasReact2 = 'React' in titleText
+        matchSalary = salarySlice[-1] == '-' or int(salarySlice) <= 10 or int(salarySlice) >= 20
+        # if (noWeb and noFront) or hasReact or hasReact2 or notBeijing or matchSalary:
+        if (noWeb and noFront) or notBeijing or matchSalary:
+            print('matchSalary not--', item)
             continue
 
         link_href = item.find_element(By.TAG_NAME, "a").get_attribute('href')

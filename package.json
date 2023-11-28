@@ -22,7 +22,9 @@
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^2.0.0",
-    "electron-updater": "^6.1.1"
+    "electron-chromedriver": "^26.6.0",
+    "electron-updater": "^6.1.1",
+    "selenium-webdriver": "^4.15.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.1",

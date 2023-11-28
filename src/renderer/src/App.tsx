@@ -1,12 +1,12 @@
-import { defineComponent, ref, onMounted } from 'vue'
-import { contextBridge, ipcRenderer } from 'electron'
+import { BrowserWindow } from 'electron'
+import { defineComponent, ref, onMounted, onBeforeMount } from 'vue'
 
 const App = defineComponent({
   name: 'App',
   setup(props, { slots }) {
     const btnClick = async () => {
       const response = await window.electron.ipcRenderer.invoke('getUserDirName')
-      console.log('response:', response)
+      const response2 = await window.electron.ipcRenderer.invoke('createNewWindow')
     }
 
     return () => (

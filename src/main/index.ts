@@ -1,10 +1,11 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+import { createWindow as createWindowHandler } from './createWindow'
 import { ipcEventHandle } from './ipcHandle'
+import path, { join } from 'path'
+import icon from '../../resources/icon.png?asset'
 
-function createWindow(): void {
+export function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -14,8 +15,14 @@ function createWindow(): void {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      contextIsolation: false,
+      nodeIntegration: true
     }
+  })
+
+  Object.keys(ipcEventHandle).forEach((key) => {
+    ipcMain.handle(key, ipcEventHandle[key].bind(this, app))
   })
 
   mainWindow.on('ready-to-show', () => {
@@ -34,10 +41,6 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-
-  Object.keys(ipcEventHandle).forEach((key) => {
-    ipcMain.handle(key, ipcEventHandle[key].bind(this, app))
-  })
 }
 
 // This method will be called when Electron has finished

@@ -1,12 +1,12 @@
-import { BrowserWindow } from 'electron'
-import path from 'path'
-import webdriver from 'selenium-webdriver'
-import { Builder } from 'selenium-webdriver'
 import require from 'requirejs'
+import { app } from 'electron'
 
+const path = require('path')
+const webdriver = require('selenium-webdriver')
+const { Builder } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
-const By = webdriver.By
 
+const By = webdriver.By
 let userData = ''
 export const getUserDirName = async (app) => {
   const appDataPath = app.getPath('appData')
@@ -24,16 +24,29 @@ export const createNewWindow = async () => {
     `user-data-dir=${userData}`
   ])
   chromeOptions.setMobileEmulation({ deviceName: 'iPhone XR' })
-  // chromeOptions.addArguments(
-  //   'user-data-dir=/private/var/folders/jz/hpmf14910h5d7sxh_3v42rxm0000gn/T/.com.google.Chrome.NPxjC5'
-  // )
-  const driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build()
+
+  const serviceBuilder = new chrome.ServiceBuilder(
+    path.join(
+      process.resourcesPath,
+      // app.getAppPath(),
+      'app.asar.unpacked',
+      'node_modules',
+      'electron-chromedriver',
+      'bin',
+      'chromedriver'
+    )
+  )
+  console.log('serviceBuilder:', serviceBuilder)
+  const driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(chromeOptions)
+    .setChromeService(serviceBuilder)
+    .build()
 
   driver.get('https://www.zhipin.com/beijing/')
   driver.manage().window().setRect({ width: 445, height: 1000 })
 
   communicate(driver)
-  // const read_more = driver.findElement(By.xpath('//*[@id="main"]/div[3]/div[2]/div'))
 }
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))

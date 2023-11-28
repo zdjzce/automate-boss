@@ -1,4 +1,3 @@
-import { BrowserWindow } from 'electron'
 import { defineComponent, ref, onMounted, onBeforeMount } from 'vue'
 
 const App = defineComponent({

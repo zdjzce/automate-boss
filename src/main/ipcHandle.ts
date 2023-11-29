@@ -27,9 +27,9 @@ export const createNewWindow = async () => {
 
   const serviceBuilder = new chrome.ServiceBuilder(
     path.join(
-      process.resourcesPath,
-      // app.getAppPath(),
-      'app.asar.unpacked',
+      // process.resourcesPath,
+      app.getAppPath(),
+      // 'app.asar.unpacked',
       'node_modules',
       'electron-chromedriver',
       'bin',

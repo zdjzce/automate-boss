@@ -1,0 +1,11 @@
+:root {
+  --primary-color: var(--purple-600);
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  padding: 20px;
+}

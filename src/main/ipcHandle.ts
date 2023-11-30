@@ -16,12 +16,10 @@ export const getUserDirName = async (app) => {
 }
 
 let state: State
-
 export const updateState = async (event, ...args) => {
   state = JSON.parse(args[args.length - 1])
 }
 
-const By = webdriver.By
 export const createNewWindow = async () => {
   console.log('state:', state)
   const chromeOptions = new chrome.Options()

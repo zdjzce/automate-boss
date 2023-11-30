@@ -13,12 +13,12 @@ const InfoMain = defineComponent({
   setup(props, { slots }) {
     return () => (
       <div>
-        <p class="font-bold mb-[20px] text-red-700 text-[16px]">
-          注意: 需要 chrome 116 及之前的版本, 且关闭 chrome 自动更新，详细点击
+        <Card class="font-bold !mb-[12px]">
+          注意: 需要 Chrome 116 及之前的版本, 且关闭 chrome 自动更新，详细点击
           <a href="" class="text-[#8B5CB7] border-b-[3px] border-indigo ml-[3px]">
             README
           </a>
-        </p>
+        </Card>
 
         <InfoCount></InfoCount>
         <InfoForm></InfoForm>

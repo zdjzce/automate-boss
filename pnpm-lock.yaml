@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@ant-design/icons-vue':
+    specifier: ^7.0.1
+    version: 7.0.1(vue@3.3.9)
   '@electron-toolkit/preload':
     specifier: ^2.0.0
     version: 2.0.0(electron@25.9.6)

@@ -10,12 +10,12 @@ const InfoCount = defineComponent({
     return () => (
       <div class="flex flex-nowrap mb-[16px] h-[100px]">
         <Card class="!mr-[16px]">
-          <div class="text-[#202020]">未读消息总数</div>
+          <div class="text-[#202020]">未读消息总数:</div>
           <div class="font-bold text-[20px] text-[#8B5CB7]">123</div>
         </Card>
 
         <Card>
-          <div>今日已投递次数</div>
+          <div>今日已投递次数:</div>
           <div class="font-bold text-[20px] text-[#5D4BA9]">123</div>
         </Card>
       </div>

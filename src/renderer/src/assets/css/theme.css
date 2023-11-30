@@ -1,5 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --primary-color: var(--purple-600);
 }
 
 html {
@@ -8,4 +11,8 @@ html {
 
 body {
   padding: 20px;
+}
+
+.ant-card-body {
+  width: 100% !important;
 }

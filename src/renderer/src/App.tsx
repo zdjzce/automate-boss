@@ -1,20 +1,22 @@
 import { defineComponent } from 'vue'
-import InfoForm from './components/Form'
-import { ConfigProvider } from 'ant-design-vue'
+import InfoMain from './components/InfoMain'
+import { ConfigProvider, StyleProvider } from 'ant-design-vue'
 
 const App = defineComponent({
   name: 'App',
   setup(props, { slots }) {
     return () => (
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#7F79F7'
-          }
-        }}
-      >
-        <InfoForm></InfoForm>
-      </ConfigProvider>
+      <StyleProvider hashPriority='high'>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: '#7F79F7'
+            }
+          }}
+        >
+          <InfoMain></InfoMain>
+        </ConfigProvider>
+      </StyleProvider>
     )
   }
 })

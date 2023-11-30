@@ -1,15 +1,14 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { createWindow as createWindowHandler } from './createWindow'
 import { ipcEventHandle } from './ipcHandle'
-import path, { join } from 'path'
+import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 
 export function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 550,
+    height: 700,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),

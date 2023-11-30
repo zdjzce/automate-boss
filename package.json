@@ -22,6 +22,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^2.0.0",
+    "ant-design-vue": "4.x",
     "electron-chromedriver": "^26.6.0",
     "electron-updater": "^6.1.1",
     "requirejs": "^2.3.6",

@@ -25,7 +25,7 @@
     "@electron-toolkit/utils": "^2.0.0",
     "ant-design-vue": "4.x",
     "electron-updater": "^6.1.1",
-    "puppeteer-core": "^21.5.2",
+    "puppeteer-core": "19.11.1",
     "request-promise-native": "^1.0.9",
     "tailwindcss": "^3.3.5"
   },

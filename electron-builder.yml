@@ -12,8 +12,6 @@ files:
 asar: true
 asarUnpack:
   - resources/**
-  - ./node_modules/electron-chromedriver
-  - ./node_modules/.bin/chromedriver
 win:
   executableName: automate-boss
 nsis:

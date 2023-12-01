@@ -1,8 +1,7 @@
 import { ipcMain } from 'electron'
 import { State } from '../renderer/src/state'
 import puppeteer, { Page } from 'puppeteer-core'
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+import { setTimeout } from 'node:timers/promises'
 
 export const communicate = async (page: Page, state: State) => {
   const isLogin = await checkLogin(page)
@@ -10,8 +9,6 @@ export const communicate = async (page: Page, state: State) => {
   if (!isLogin) {
     throw new Error('请先登录，然后关闭窗口重新点击启动！')
   }
-
-  await sleep(2000)
 
   // await scrollJobList(page)
   await startChat(page)
@@ -33,35 +30,56 @@ const scrollJobList = async (page: Page) => {
 }
 
 const startChat = async (page: Page) => {
-  sleep(2000)
+  await setTimeout(3000)
   const li = await page.$$('.job-card-box')
-  const readMore = await getXEle(page, '//*[@id="wrap"]/div[2]/div[2]/div/div/div[2]/div/div[2]/a')
 
-  console.log('li:', li)
   for (const item of li) {
     console.log('item:', item)
     await page.evaluate((liItem) => {
       liItem.click()
     }, item)
 
-    sleep(1000)
-    // const moreInfo = await page.$('.more-job-btn')
-    const newPagePromise = new Promise<Page>((resolve) =>
-      page.browser().once('targetcreated', (target) => resolve(target.page()))
-    )
-    console.log('readMore:', readMore)
+    const newPagePromise = () =>
+      new Promise<Page>((resolve) =>
+        page.browser().once('targetcreated', (target) => resolve(target.page()))
+      )
 
+    const readMore = await getXEle(
+      page,
+      '//*[@id="wrap"]/div[2]/div[2]/div/div/div[2]/div/div[2]/a',
+      3000
+    )
     await page.evaluate((readEle) => {
       console.log('readEle:', readEle)
       readEle?.click()
     }, readMore)
 
-    // 等待新页面加载完成
-    const newPage = await newPagePromise
-    await newPage.close()
-    
+    const newPage = await newPagePromise()
+
+    await newPageHandler(newPage)
     await page.bringToFront()
   }
+}
+
+const newPageHandler = async (newPage: Page) => {
+  const immediately = await getXEle(
+    newPage,
+    '//*[@id="main"]/div[1]/div/div/div[1]/div[3]/div[1]/a[2]',
+    10000
+  )
+  await newPage.evaluate((ele) => {
+    ele.click()
+  }, immediately)
+
+  const continueEle = await getXEle(newPage, '/html/body/div[11]/div[2]/div[3]/div/span[1]')
+  if (continueEle) {
+    await newPage.evaluate((ele) => {
+      ele.click()
+    }, continueEle)
+  }
+
+  await setTimeout(2000)
+  await newPage.close()
 }
 
 const checkLogin = async (page: Page) => {

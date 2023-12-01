@@ -35,25 +35,9 @@ export const createNewWindow = async () => {
     height: 720,
     deviceScaleFactor: 0.5,
   })
+
   await page.goto('http://test.mihuashi.com/dashboard/projects')
-  await setTimeout(() => { }, 1000)
-
-
-  await page.waitForXPath('//*[@id="main-container"]/section/main/section/article/div/div[1]/section[2]/section[2]/a/button', { timeout: 1000 });
-
-  const element = await page.waitForXPath('//*[@id="main-container"]/section/main/section/article/div/div[1]/section[2]/section[2]/a/button')
-  element?.click()
-  // await element[0].click()
-
-  // communicate(1, state)
-
-  page.on("response", async (response) => {
-
-    if (response.url().includes("custom_shortcuts")) {
-        console.log(await response.text());
-    }
-
-  })
+  await communicate(page, state)
 
 }
 

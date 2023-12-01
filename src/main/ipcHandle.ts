@@ -22,22 +22,31 @@ export const updateState = async (event, ...args) => {
 }
 
 export const createNewWindow = async () => {
-  const exPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-  const browser = await puppeteer.launch({
-    executablePath: exPath,
-    userDataDir: userData,
-    headless: false
-  })
+  (async () => {
 
-  const page = await browser.newPage();
-  page.setViewport({
-    width: 1280,
-    height: 720,
-    deviceScaleFactor: 0.5,
-  })
+    try {
+      const exPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+      const browser = await puppeteer.launch({
+        executablePath: exPath,
+        userDataDir: userData,
+        headless: false
+      })
+    
+      const page = await browser.newPage();
+      page.setViewport({
+        width: 1280,
+        height: 720,
+        deviceScaleFactor: 0.5,
+      })
+    
+      await page.goto('http://test.mihuashi.com/dashboard/projects')
+      await communicate(page, state)
+    } catch (error) {
+      console.log('error', error)
+    }
+  
+  })()
 
-  await page.goto('http://test.mihuashi.com/dashboard/projects')
-  await communicate(page, state)
 
 }
 

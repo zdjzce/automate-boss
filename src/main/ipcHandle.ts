@@ -1,4 +1,4 @@
-import { app } from 'electron'
+import { BrowserWindow, ipcMain } from 'electron'
 import { communicate } from './communicate'
 import { State } from '../renderer/src/state'
 import puppeteer from 'puppeteer-core'
@@ -21,14 +21,15 @@ export const updateState = async (event, ...args) => {
   state = JSON.parse(args[args.length - 1])
 }
 
-export const createNewWindow = async () => {
+export const createNewWindow = async (app: Electron.App, mainWindow: BrowserWindow) => {
+  
   ;(async () => {
     try {
       const exPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
       const browser = await puppeteer.launch({
         executablePath: exPath,
         userDataDir: userData,
-        headless: false
+        headless: false,
       })
 
       const page = await browser.newPage()
@@ -38,9 +39,10 @@ export const createNewWindow = async () => {
         deviceScaleFactor: 0.5
       })
 
-      await page.goto('http://test.mihuashi.com/dashboard/projects')
+      await page.goto('https://www.zhipin.com/web/geek/job-recommend?ka=header-job-recommend')
       await communicate(page, state)
     } catch (error) {
+      mainWindow.webContents.send('Error', error)
       console.log('error', error)
     }
   })()

@@ -13,19 +13,24 @@ import FormItemContainer from './common/FormItemContainer'
 
 const InfoForm = defineComponent({
   name: 'InfoForm',
+  props: {
+    onStart: {
+      type: Function,
+      required: true
+    }
+  },
   setup(props, { slots }) {
     const btnClick = async () => {
-      await window.electron.ipcRenderer.invoke('updateState', JSON.stringify(state))
-      await window.electron.ipcRenderer.invoke('createNewWindow')
+      props.onStart()
     }
 
     return () => (
       <Card bordered={false} class="flex flex-wrap text-center w-[100%]">
-        <FormItemContainer title="输入您的 Chrome 路径(如何查看：打开 Chrome，URL 输入 chrome://version，复制可执行文件路径后面的链接)">
+        <FormItemContainer title="Chrome 程序路径">
           <Input
             class="w-[100%]"
             v-model:value={state.greeting}
-            placeholder={'黏贴您的 Chrome 路径'}
+            placeholder={'Chrome 路径 使用 chrome://version 获取，或查看 README 说明进行操作'}
           />
         </FormItemContainer>
 

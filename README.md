@@ -1,4 +1,11 @@
 ## 项目介绍
+
+
+此脚本迁移 Electron + Puppeteer 客户端中，预计 2023.12.3 即可完成
+
+——————————————————————————————————
+
+
 BOSS海投自动打招呼脚本，只需简单的更改即可使用。
 效果如下：  
 ![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/自动投递.gif)

@@ -1,4 +1,4 @@
-const { exec } = require('child_process')
+aconst { exec } = require('child_process')
 const fs = require('fs')
 
 exec(

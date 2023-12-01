@@ -21,7 +21,7 @@ export function createWindow(): void {
   })
 
   Object.keys(ipcEventHandle).forEach((key) => {
-    ipcMain.handle(key, ipcEventHandle[key].bind(this, app))
+    ipcMain.handle(key, ipcEventHandle[key].bind(this, app, mainWindow))
   })
 
   mainWindow.on('ready-to-show', () => {

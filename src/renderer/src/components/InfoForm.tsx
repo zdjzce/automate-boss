@@ -21,15 +21,17 @@ const InfoForm = defineComponent({
 
     return () => (
       <Card bordered={false} class="flex flex-wrap text-center w-[100%]">
-
         <FormItemContainer title="输入您的 Chrome 路径(如何查看：打开 Chrome，URL 输入 chrome://version，复制可执行文件路径后面的链接)">
-          <Input class="w-[100%]" v-model:value={state.greeting} placeholder={'黏贴您的 Chrome 路径'} />
+          <Input
+            class="w-[100%]"
+            v-model:value={state.greeting}
+            placeholder={'黏贴您的 Chrome 路径'}
+          />
         </FormItemContainer>
 
         <FormItemContainer title="打招呼语">
           <Input class="w-[100%]" v-model:value={state.greeting} />
         </FormItemContainer>
-
 
         <div class="flex flex-wrap mb-[14px] items-center">
           <p class="mb-[6px]">忽略职位关键字:</p>

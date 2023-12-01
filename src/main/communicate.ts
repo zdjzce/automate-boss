@@ -11,7 +11,7 @@ export const communicate = async (page: Page, state: State) => {
 }
 
 
-const getXEle = async (page: Page, xpath: string, handler?: () => void, timeOut?: number) => {
+const getXEle = async (page: Page, xpath: string, timeOut?: number, handler?: () => void, ) => {
   const ele = await page.waitForXPath(xpath, { timeout: timeOut || 1000});
   return ele
 }

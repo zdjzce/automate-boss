@@ -40,7 +40,7 @@ export const createNewWindow = async (app: Electron.App, mainWindow: BrowserWind
       })
 
       await page.goto('https://www.zhipin.com/web/geek/job-recommend?ka=header-job-recommend')
-      await communicate(page, state)
+      await communicate(page, state, mainWindow)
     } catch (error) {
       mainWindow.webContents.send('Error', error)
       console.log('error', error)

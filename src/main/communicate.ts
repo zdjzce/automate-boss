@@ -1,10 +1,12 @@
-import { ipcMain } from 'electron'
+import { BrowserWindow, ipcMain } from 'electron'
 import { State } from '../renderer/src/state'
 import { keysHash } from '../renderer/src/state/optionsData'
 import puppeteer, { Page } from 'puppeteer-core'
 import { setTimeout } from 'node:timers/promises'
 
-export const communicate = async (page: Page, state: State) => {
+let mainWindow
+export const communicate = async (page: Page, state: State, mainWin: BrowserWindow) => {
+  mainWindow = mainWin
   const isLogin = await checkLogin(page)
 
   if (!isLogin) {
@@ -62,7 +64,6 @@ const filterOptions = async (page: Page, state: State) => {
       if (itemFilterOptions.includes(i)) {
         console.log('optionsEle[i]:', optionsEle![i])
         await optionsEle![i].click()
-        await setTimeout(2000)
       }
     }
   }
@@ -89,9 +90,7 @@ const startChat = async (page: Page, state: State) => {
       console.log('textRes:', textRes)
       const keywords = state.ignoreJobKeyword.split(',')
       console.log('keywords:', keywords)
-      if (keywords.some((item) => textRes?.indexOf(item) >= 0)) {
-        continue
-      }
+      if (keywords.some((item) => textRes?.indexOf(item) >= 0)) continue
     }
 
     const readMore = await getXEle(
@@ -126,12 +125,14 @@ const newPageHandler = async (newPage: Page) => {
     ele.click()
   }, immediately)
 
-  const continueEle = await getXEle(newPage, '/html/body/div[11]/div[2]/div[3]/div/span[1]')
+  const continueEle = await getXEle(newPage, '/html/body/div[11]/div[2]/div[3]/div/span[1]', 3000)
   if (continueEle) {
     await newPage.evaluate((ele) => {
       ele.click()
     }, continueEle)
   }
+
+  mainWindow.webContents.send('Count')
 
   await setTimeout(2000)
   await newPage.close()

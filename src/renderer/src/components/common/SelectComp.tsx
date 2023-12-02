@@ -1,6 +1,6 @@
 import { Select } from 'ant-design-vue'
 import { DefaultOptionType } from 'ant-design-vue/es/select'
-import { defineComponent, ref, onMounted, Ref } from 'vue'
+import { defineComponent, ref, watch, Ref, onMounted, unref, toRaw } from 'vue'
 const SelectComp = defineComponent({
   name: 'SelectComp',
   props: {
@@ -11,12 +11,17 @@ const SelectComp = defineComponent({
       type: Boolean,
       default: () => true
     },
-    onChangeItem: {
-      type: Function
+    selectedItems: {
+      type: Array,
+      default: () => []
     }
   },
   setup(props, { slots }) {
-    const selectedItems = ref([])
+    const selectedItems = ref([]) as Ref<string[]>
+    onMounted(() => {
+      selectedItems.value = toRaw(props.selectedItems) as string[]
+    })
+
     const options = ref(
       props.items?.map((item) => ({
         value: item,
@@ -31,7 +36,6 @@ const SelectComp = defineComponent({
         v-model:value={selectedItems.value}
         class="w-[100%]"
         showArrow={true}
-        onSelect={() => props.onChangeItem?.(selectedItems.value)}
       />
     )
   }

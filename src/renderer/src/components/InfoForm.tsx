@@ -1,6 +1,6 @@
 import { Button, Card, Input, Select } from 'ant-design-vue'
 import { defineComponent, onMounted, ref, watch } from 'vue'
-import { state } from '../state'
+import { state, stateForMain } from '../state'
 import FormItemContainer from './common/FormItemContainer'
 import { optionsData, optionsKeyValue } from '../state/optionsData'
 import SelectComp from './common/SelectComp'
@@ -34,15 +34,6 @@ const InfoForm = defineComponent({
       props.onStart()
     }
 
-    const changeSelect = (key, value) => {
-      // 只发送选中值对应的索引
-      if (typeof value === 'string') {
-        state[key] = [optionsData[key].indexOf(value)]
-      } else {
-        state[key] = value.map((item) => optionsData[key].indexOf(item))
-      }
-    }
-
     return () => (
       <Card bordered={false} class="flex flex-wrap text-center w-[100%]">
         <FormItemContainer title="* Chrome 程序路径" classNames="text-[#FE574A]">
@@ -65,7 +56,7 @@ const InfoForm = defineComponent({
               <SelectComp
                 items={optionsData[key]}
                 isSingle={item.single}
-                onChangeItem={(val) => changeSelect(key, val)}
+                selectedItems={state[key]}
               ></SelectComp>
             </FormItemContainer>
           )

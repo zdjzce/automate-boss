@@ -2,7 +2,6 @@ import { reactive, watch } from 'vue'
 
 export type State = Partial<{
   executablePath: string
-  greeting: string
   ignoreJobKeyword: string
   jobType: string[]
   salaryRange: string[]
@@ -15,7 +14,16 @@ export const state: State = reactive({
   // TODO remove
   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   // executablePath: '',
-  greeting: '',
+  ignoreJobKeyword: '',
+  recruitType: [],
+  salaryRange: [],
+  experience: [],
+  educationalBg: [],
+  companySize: []
+})
+
+export const stateForMain = reactive({
+  executablePath: '',
   ignoreJobKeyword: '',
   recruitType: [],
   salaryRange: [],

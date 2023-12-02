@@ -1,9 +1,11 @@
 import { Button, Card, Form, FormItem, Input } from 'ant-design-vue'
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, Ref } from 'vue'
 import InfoCount from './InfoCount'
 import InfoError from './InfoError'
 import InfoForm from './InfoForm'
-import { state } from '../state'
+import { state, stateForMain } from '../state'
+import { keysHash, optionsData } from '@renderer/state/optionsData'
+import { setCount } from '@renderer/state/local'
 // TODO
 /**
  *  提示语：需要 chrome 116 及之前的版本, 且关闭 chrome 自动更新，详细请看
@@ -14,19 +16,61 @@ const InfoMain = defineComponent({
   setup(props, { slots }) {
     const ipc = window.electron.ipcRenderer
     const onStart = async () => {
-      await ipc.invoke('updateState', JSON.stringify(state))
+      stateMainReplace()
+      await ipc.invoke('updateState', JSON.stringify(stateForMain))
       await ipc.invoke('createNewWindow')
+      window.localStorage.setItem('state', JSON.stringify(state))
+    }
+
+    const stateMainReplace = () => {
+      Object.keys(stateForMain).forEach((key) => (stateForMain[key] = state[key]))
+
+      const keys = Object.keys(keysHash)
+      for (const key of keys) {
+        if (stateForMain[key] instanceof Array) {
+          stateForMain[key] = stateForMain[key]
+            .map((item) => optionsData[key].indexOf(item))
+            .filter((item) => item !== -1)
+        } else {
+          stateForMain[key] = [optionsData[key].indexOf(stateForMain[key])].filter(
+            (item) => item !== -1
+          )
+        }
+      }
     }
 
     onMounted(() => {
       onError()
+      onCount()
+      initState()
     })
+
+    const hasInit = ref(false)
+    const initState = () => {
+      const stateStr = window.localStorage.getItem('state')
+      count.value = window.localStorage.getItem('count') || 0
+      if (stateStr) {
+        const stateObj = JSON.parse(stateStr)
+        Object.keys(stateObj).forEach((key) => {
+          state[key] = stateObj[key]
+        })
+      }
+      hasInit.value = true
+    }
 
     const errorData = ref('')
     const onError = () => {
       ipc.on('Error', (event, ...args) => {
-        console.log('args====:', args)
         errorData.value = args[0].message
+      })
+    }
+
+    const count = ref(0) as Ref<number | string>
+    const onCount = () => {
+      ipc.on('Count', (event, ...args) => {
+        const val = setCount()
+        console.log('val:', val)
+        count.value = val
       })
     }
 
@@ -53,8 +97,8 @@ const InfoMain = defineComponent({
           </div>
         </Card>
 
-        <InfoCount></InfoCount>
-        <InfoForm onStart={onStart}></InfoForm>
+        <InfoCount count={count.value}></InfoCount>
+        {hasInit.value ? <InfoForm onStart={onStart}></InfoForm> : null}
         <InfoError errorData={errorData.value}></InfoError>
       </div>
     )

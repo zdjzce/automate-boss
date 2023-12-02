@@ -6,6 +6,12 @@ import { defineComponent, computed } from 'vue'
 
 const InfoCount = defineComponent({
   name: 'InfoCount',
+  props: {
+    count: {
+      type: Number || String,
+      required: true
+    }
+  },
   setup(props, { slots }) {
     return () => (
       <div class="flex flex-nowrap mb-[16px] h-[100px]">
@@ -16,7 +22,7 @@ const InfoCount = defineComponent({
 
         <Card>
           <div>今日使用软件投递次数:</div>
-          <div class="font-bold text-[20px] text-[#5D4BA9]">123</div>
+          <div class="font-bold text-[20px] text-[#5D4BA9]">{props.count}</div>
         </Card>
       </div>
     )

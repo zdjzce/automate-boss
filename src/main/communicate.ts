@@ -14,9 +14,8 @@ export const communicate = async (page: Page, state: State, mainWin: BrowserWind
   }
   console.log('keysHash:', keysHash)
 
-  await scrollJobList(page)
   await filterOptions(page, state)
-  await startChat(page, state)
+  await Promise.all([scrollJobList(page), getMessageCount(page), startChat(page, state)])
 }
 
 let hasMore = true
@@ -64,6 +63,7 @@ const filterOptions = async (page: Page, state: State) => {
       if (itemFilterOptions.includes(i)) {
         console.log('optionsEle[i]:', optionsEle![i])
         await optionsEle![i].click()
+        await setTimeout(1500)
       }
     }
   }
@@ -75,6 +75,8 @@ const startChat = async (page: Page, state: State) => {
   const li = await page.$$('.job-card-box')
 
   for (const item of li) {
+    await getMessageCount(page)
+
     await page.evaluate((liItem) => {
       const text = liItem.querySelector('.job-name')?.textContent
       console.log('text:', text)
@@ -87,7 +89,7 @@ const startChat = async (page: Page, state: State) => {
     if (state.ignoreJobKeyword) {
       const textRes = await page.evaluate((el) => el?.textContent, jobInfo)
 
-      console.log('textRes:', textRes)
+      console.log('jobInfo:', textRes)
       const keywords = state.ignoreJobKeyword.split(',')
       console.log('keywords:', keywords)
       if (keywords.some((item) => textRes?.indexOf(item) >= 0)) continue
@@ -112,6 +114,14 @@ const startChat = async (page: Page, state: State) => {
     await newPageHandler(newPage)
     await page.bringToFront()
   }
+}
+
+const getMessageCount = async (page: Page) => {
+  const count = await page.$('.nav-chat-num')
+  const textRes = await page.evaluate((el) => el?.textContent, count)
+  console.log('textRes:', textRes)
+
+  mainWindow.webContents.send('MessageCount', textRes)
 }
 
 // 岗位详情页逻辑

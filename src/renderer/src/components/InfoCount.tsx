@@ -10,6 +10,10 @@ const InfoCount = defineComponent({
     count: {
       type: Number || String,
       required: true
+    },
+    messageCount: {
+      type: Number || String,
+      required: true
     }
   },
   setup(props, { slots }) {
@@ -17,7 +21,7 @@ const InfoCount = defineComponent({
       <div class="flex flex-nowrap mb-[16px] h-[100px]">
         <Card class="!mr-[16px]">
           <div class="text-[#202020]">未读消息总数:</div>
-          <div class="font-bold text-[20px] text-[#8B5CB7]">123</div>
+          <div class="font-bold text-[20px] text-[#8B5CB7]">{props.messageCount}</div>
         </Card>
 
         <Card>

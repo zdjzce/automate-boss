@@ -66,11 +66,17 @@ const InfoMain = defineComponent({
     }
 
     const count = ref(0) as Ref<number | string>
+    const messageCount = ref(0) as Ref<number | string>
     const onCount = () => {
       ipc.on('Count', (event, ...args) => {
         const val = setCount()
         console.log('val:', val)
         count.value = val
+      })
+
+      ipc.on('MessageCount', (event, ...args) => {
+        console.log('args:', args)
+        messageCount.value = args[0] || 0
       })
     }
 
@@ -97,7 +103,7 @@ const InfoMain = defineComponent({
           </div>
         </Card>
 
-        <InfoCount count={count.value}></InfoCount>
+        <InfoCount count={count.value} messageCount={messageCount.value}></InfoCount>
         {hasInit.value ? <InfoForm onStart={onStart}></InfoForm> : null}
         <InfoError errorData={errorData.value}></InfoError>
       </div>

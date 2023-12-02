@@ -16,7 +16,7 @@ const SelectComp = defineComponent({
       default: () => []
     }
   },
-  setup(props, { slots }) {
+  setup(props, { slots, emit }) {
     const selectedItems = ref([]) as Ref<string[]>
     onMounted(() => {
       selectedItems.value = toRaw(props.selectedItems) as string[]
@@ -29,11 +29,20 @@ const SelectComp = defineComponent({
       })) as DefaultOptionType[]
     )
 
+    const onChange = (value) => {
+      if (typeof value === 'string') {
+        emit('update:selectedItems', [value])
+      } else {
+        emit('update:selectedItems', value)
+      }
+    }
+
     return () => (
       <Select
         mode={props.isSingle ? 'single' : 'multiple'}
         options={options.value}
-        v-model:value={selectedItems.value}
+        v-model:value={props.selectedItems}
+        onChange={onChange}
         class="w-[100%]"
         showArrow={true}
       />

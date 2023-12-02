@@ -6,6 +6,7 @@ import { setTimeout } from 'node:timers/promises'
 
 let mainWindow
 export const communicate = async (page: Page, state: State, mainWin: BrowserWindow) => {
+  console.log('state:', state)
   mainWindow = mainWin
   const isLogin = await checkLogin(page)
 
@@ -48,9 +49,9 @@ const filterOptions = async (page: Page, state: State) => {
     // 找到与选项标签相同的 item
     const findKeyForOptions = Object.keys(keysHash).filter((key) => keysHash[key] === textValue)[0]
     const itemFilterOptions = state[findKeyForOptions]
+    console.log('itemFilterOptions:', itemFilterOptions)
 
     if (!itemFilterOptions.length) continue
-    console.log('itemFilterOptions:', itemFilterOptions)
 
     await subElement?.click()
 
@@ -62,8 +63,8 @@ const filterOptions = async (page: Page, state: State) => {
     for (let i = 0; i < optionsEle!.length; i++) {
       if (itemFilterOptions.includes(i)) {
         console.log('optionsEle[i]:', optionsEle![i])
+        await setTimeout(800)
         await optionsEle![i].click()
-        await setTimeout(1500)
       }
     }
   }

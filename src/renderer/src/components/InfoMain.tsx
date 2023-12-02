@@ -8,7 +8,6 @@ import { keysHash, optionsData } from '@renderer/state/optionsData'
 import { setCount } from '@renderer/state/local'
 // TODO
 /**
- *  提示语：需要 chrome 116 及之前的版本, 且关闭 chrome 自动更新，详细请看
  *  显示投递次数图表与回复率图表 (优先级最低，略微麻烦)
  */
 
@@ -16,10 +15,11 @@ const InfoMain = defineComponent({
   setup(props, { slots }) {
     const ipc = window.electron.ipcRenderer
     const onStart = async () => {
+      console.log('state:', state)
+      window.localStorage.setItem('state', JSON.stringify(state))
       stateMainReplace()
       await ipc.invoke('updateState', JSON.stringify(stateForMain))
       await ipc.invoke('createNewWindow')
-      window.localStorage.setItem('state', JSON.stringify(state))
     }
 
     const stateMainReplace = () => {

@@ -11,9 +11,7 @@ export type State = Partial<{
 }>
 
 export const state: State = reactive({
-  // TODO remove
-  executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  // executablePath: '',
+  executablePath: '',
   ignoreJobKeyword: '',
   recruitType: [],
   salaryRange: [],

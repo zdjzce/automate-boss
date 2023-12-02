@@ -56,7 +56,7 @@ const InfoForm = defineComponent({
               <SelectComp
                 items={optionsData[key]}
                 isSingle={item.single}
-                selectedItems={state[key]}
+                v-model:selectedItems={state[key]}
               ></SelectComp>
             </FormItemContainer>
           )

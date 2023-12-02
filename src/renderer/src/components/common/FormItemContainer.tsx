@@ -5,18 +5,20 @@ const FormItemContainer = defineComponent({
   props: {
     title: {
       type: String,
-      default: '',
+      default: ''
     },
+    classNames: {
+      type: String
+    }
   },
 
   setup(props, { slots }) {
-
     return () => (
       <div class="flex flex-wrap mb-[14px] items-center">
-        <p class="mb-[6px] text-left">{props.title}:</p>
+        <p class={'mb-[6px] text-left ' + (props.classNames || '')}>{props.title}:</p>
         {slots.default?.()}
       </div>
     )
-  },
+  }
 })
 export default FormItemContainer

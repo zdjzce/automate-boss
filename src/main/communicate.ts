@@ -39,11 +39,6 @@ const startChat = async (page: Page) => {
       liItem.click()
     }, item)
 
-    const newPagePromise = () =>
-      new Promise<Page>((resolve) =>
-        page.browser().once('targetcreated', (target) => resolve(target.page()))
-      )
-
     const readMore = await getXEle(
       page,
       '//*[@id="wrap"]/div[2]/div[2]/div/div/div[2]/div/div[2]/a',
@@ -54,6 +49,10 @@ const startChat = async (page: Page) => {
       readEle?.click()
     }, readMore)
 
+    const newPagePromise = () =>
+      new Promise<Page>((resolve) =>
+        page.browser().once('targetcreated', (target) => resolve(target.page()))
+      )
     const newPage = await newPagePromise()
 
     await newPageHandler(newPage)

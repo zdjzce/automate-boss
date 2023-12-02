@@ -15,7 +15,7 @@ const InfoCount = defineComponent({
         </Card>
 
         <Card>
-          <div>今日已投递次数:</div>
+          <div>今日使用软件投递次数:</div>
           <div class="font-bold text-[20px] text-[#5D4BA9]">123</div>
         </Card>
       </div>

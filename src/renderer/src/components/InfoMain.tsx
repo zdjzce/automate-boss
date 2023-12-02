@@ -36,17 +36,20 @@ const InfoMain = defineComponent({
           <div>注意: </div>
           <div>
             1. 必填 Chrome 程序路径
-            <a
-              href=""
-              class="text-[#8B5CB7] border-b-[3px] border-indigo ml-[3px]"
+            <span
+              class="text-[#8B5CB7] border-b-[3px] border-indigo ml-[3px] cursor-pointer"
               style="word-break: break-all;"
             >
               打开 Chrome，URL 输入 chrome://version，复制可执行文件路径后面的链接。
-            </a>
+            </span>
           </div>
           <div>
             2. 首次启动需要登录账号，关闭后再启动即可(如果错误提示信息为Failed to launch the browser
-            process! 那么需要完全关闭浏览器进程，或重启软件)
+            process!{' '}
+            <span class="text-[#8B5CB7]  ml-[3px]" style="word-break: break-all;">
+              那么需要完全关闭浏览器进程，或重启软件
+            </span>
+            )
           </div>
         </Card>
 

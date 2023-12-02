@@ -22,11 +22,12 @@ export const updateState = async (event, ...args) => {
 }
 
 export const createNewWindow = async (app: Electron.App, mainWindow: BrowserWindow) => {
+  const { executablePath } = state
+
   ;(async () => {
     try {
-      const exPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
       const browser = await puppeteer.launch({
-        executablePath: exPath,
+        executablePath: executablePath,
         userDataDir: userData,
         headless: false
       })

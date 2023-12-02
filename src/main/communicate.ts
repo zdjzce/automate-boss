@@ -1,5 +1,6 @@
 import { ipcMain } from 'electron'
 import { State } from '../renderer/src/state'
+import { keysHash } from '../renderer/src/state/optionsData'
 import puppeteer, { Page } from 'puppeteer-core'
 import { setTimeout } from 'node:timers/promises'
 
@@ -9,8 +10,10 @@ export const communicate = async (page: Page, state: State) => {
   if (!isLogin) {
     throw new Error('请先登录，然后关闭窗口重新点击启动！')
   }
+  console.log('keysHash:', keysHash)
 
-  // await scrollJobList(page)
+  await scrollJobList(page)
+  await filterOptions(page, state)
   await startChat(page)
 }
 
@@ -29,6 +32,39 @@ const scrollJobList = async (page: Page) => {
   })
 }
 
+// 筛选填入的选项
+const filterOptions = async (page: Page, state: State) => {
+  const ele = await page.$$('.condition-filter-select')
+
+  for (const item of ele) {
+    const subElement = await item.$('.current-select > .placeholder-text')
+    const textValue = await page.evaluate((el) => el?.textContent, subElement)
+
+    // 找到与选项标签相同的 item
+    const findKeyForOptions = Object.keys(keysHash).filter((key) => keysHash[key] === textValue)[0]
+    const itemFilterOptions = state[findKeyForOptions]
+
+    if (!itemFilterOptions.length) continue
+    console.log('itemFilterOptions:', itemFilterOptions)
+
+    await subElement?.click()
+
+    await setTimeout(1500)
+
+    const optionsEle = await item?.$$('.filter-select-dropdown > ul > li')
+    console.log('optionsEle:', optionsEle)
+
+    for (let i = 0; i < optionsEle!.length; i++) {
+      if (itemFilterOptions.includes(i)) {
+        console.log('optionsEle[i]:', optionsEle![i])
+        await optionsEle![i].click()
+        await setTimeout(500)
+      }
+    }
+  }
+}
+
+// 开始聊天
 const startChat = async (page: Page) => {
   await setTimeout(3000)
   const li = await page.$$('.job-card-box')
@@ -60,6 +96,7 @@ const startChat = async (page: Page) => {
   }
 }
 
+// 岗位详情页逻辑
 const newPageHandler = async (newPage: Page) => {
   const immediately = await getXEle(
     newPage,

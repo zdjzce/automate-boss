@@ -35,6 +35,7 @@ const InfoForm = defineComponent({
     }
 
     const changeSelect = (key, value) => {
+      // 只发送选中值对应的索引
       if (typeof value === 'string') {
         state[key] = [optionsData[key].indexOf(value)]
       } else {

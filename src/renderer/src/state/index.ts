@@ -4,11 +4,11 @@ export type State = Partial<{
   executablePath: string
   greeting: string
   ignoreJobKeyword: string
-  jobType: string
-  salaryRange: string
-  workExperience: string
-  educationRequirement: string
-  companySize: string
+  jobType: string[]
+  salaryRange: string[]
+  workExperience: string[]
+  educationRequirement: string[]
+  companySize: string[]
 }>
 
 export const state: State = reactive({
@@ -17,11 +17,11 @@ export const state: State = reactive({
   // executablePath: '',
   greeting: '',
   ignoreJobKeyword: '',
-  recruitType: '',
-  salaryRange: '',
-  experience: '',
-  educationalBg: '',
-  companySize: ''
+  recruitType: [],
+  salaryRange: [],
+  experience: [],
+  educationalBg: [],
+  companySize: []
 })
 
 export const watchHandler = (data: unknown, handler: (...args: unknown[]) => void) => {

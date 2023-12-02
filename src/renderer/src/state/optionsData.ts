@@ -22,7 +22,7 @@ export const optionsKeyValue = {
     single: true
   },
   salaryRange: {
-    title: '薪资范围',
+    title: '薪资待遇',
     single: true
   },
   experience: {
@@ -38,3 +38,8 @@ export const optionsKeyValue = {
     single: false
   }
 }
+
+export const keysHash = Object.keys(optionsKeyValue).reduce((hash, key) => {
+  hash[key] = optionsKeyValue[key].title
+  return hash
+}, {})

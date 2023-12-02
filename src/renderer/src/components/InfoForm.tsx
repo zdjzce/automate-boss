@@ -54,11 +54,7 @@ const InfoForm = defineComponent({
           {showHint.value ? <div class="text-[#FE574A]">程序路径必须输入！请看 README</div> : ''}
         </FormItemContainer>
 
-        <FormItemContainer title="打招呼语">
-          <Input class="w-[100%]" v-model:value={state.greeting} />
-        </FormItemContainer>
-
-        <FormItemContainer title="忽略职位关键字">
+        <FormItemContainer title="忽略职位关键字，多个以英文逗号分隔">
           <Input class="w-[100%]" v-model:value={state.ignoreJobKeyword} />
         </FormItemContainer>
 

@@ -14,27 +14,31 @@ export const communicate = async (page: Page, state: State) => {
 
   await scrollJobList(page)
   await filterOptions(page, state)
-  await startChat(page)
+  await startChat(page, state)
 }
 
+let hasMore = true
 const scrollJobList = async (page: Page) => {
-  const ele = await getXEle(page, '//*[@id="wrap"]/div[2]')
+  if (!hasMore) return Promise.resolve()
+  while (hasMore) {
+    const ele = await getXEle(page, '//*[@id="wrap"]/div[2]')
 
-  await getResponse(page, '/recommend/job/list', async (res) => {
-    const hasMore = JSON.parse(res).zpData.hasMore
+    const res = await getResponse(page, '/recommend/job/list')
+    hasMore = JSON.parse(res).zpData.hasMore
     console.log('hasMore:', hasMore)
     if (hasMore) {
-      await page.evaluate((scrollEle) => {
+      page.evaluate((scrollEle) => {
         // @ts-ignore
         scrollEle.scrollTop = scrollEle.scrollHeight
       }, ele)
     }
-  })
+  }
 }
 
 // 筛选填入的选项
 const filterOptions = async (page: Page, state: State) => {
   const ele = await page.$$('.condition-filter-select')
+  console.log('ele:', ele)
 
   for (const item of ele) {
     const subElement = await item.$('.current-select > .placeholder-text')
@@ -49,7 +53,7 @@ const filterOptions = async (page: Page, state: State) => {
 
     await subElement?.click()
 
-    await setTimeout(1500)
+    await setTimeout(2000)
 
     const optionsEle = await item?.$$('.filter-select-dropdown > ul > li')
     console.log('optionsEle:', optionsEle)
@@ -58,22 +62,37 @@ const filterOptions = async (page: Page, state: State) => {
       if (itemFilterOptions.includes(i)) {
         console.log('optionsEle[i]:', optionsEle![i])
         await optionsEle![i].click()
-        await setTimeout(500)
+        await setTimeout(2000)
       }
     }
   }
 }
 
 // 开始聊天
-const startChat = async (page: Page) => {
+const startChat = async (page: Page, state: State) => {
   await setTimeout(3000)
   const li = await page.$$('.job-card-box')
 
   for (const item of li) {
-    console.log('item:', item)
     await page.evaluate((liItem) => {
+      const text = liItem.querySelector('.job-name')?.textContent
+      console.log('text:', text)
       liItem.click()
     }, item)
+
+    const jobInfo = await item.$('.job-name')
+    console.log('jobInfo:', jobInfo)
+
+    if (state.ignoreJobKeyword) {
+      const textRes = await page.evaluate((el) => el?.textContent, jobInfo)
+
+      console.log('textRes:', textRes)
+      const keywords = state.ignoreJobKeyword.split(',')
+      console.log('keywords:', keywords)
+      if (keywords.some((item) => textRes?.indexOf(item) >= 0)) {
+        continue
+      }
+    }
 
     const readMore = await getXEle(
       page,
@@ -126,12 +145,14 @@ const checkLogin = async (page: Page) => {
   return true
 }
 
-const getResponse = async (page: Page, url, cb: (data: any) => void) => {
-  page.on('response', async (response) => {
-    if (response.url().includes(url)) {
-      const data = await response.text()
-      cb(data)
-    }
+const getResponse = async (page: Page, url, cb?: (data: any) => void) => {
+  return new Promise<any>((resolve) => {
+    page.on('response', async (response) => {
+      if (response.url().includes(url)) {
+        const data = await response.text()
+        resolve(data)
+      }
+    })
   })
 }
 

@@ -15,6 +15,7 @@ export const communicate = async (page: Page, state: State, mainWin: BrowserWind
   }
   console.log('keysHash:', keysHash)
 
+  await setTimeout(2000)
   await filterOptions(page, state)
   await Promise.all([scrollJobList(page), getMessageCount(page), startChat(page, state)])
 }
@@ -54,16 +55,12 @@ const filterOptions = async (page: Page, state: State) => {
     if (!itemFilterOptions.length) continue
 
     await subElement?.click()
-
-    await setTimeout(2000)
-
     const optionsEle = await item?.$$('.filter-select-dropdown > ul > li')
     console.log('optionsEle:', optionsEle)
 
     for (let i = 0; i < optionsEle!.length; i++) {
       if (itemFilterOptions.includes(i)) {
         console.log('optionsEle[i]:', optionsEle![i])
-        await setTimeout(800)
         await optionsEle![i].click()
       }
     }

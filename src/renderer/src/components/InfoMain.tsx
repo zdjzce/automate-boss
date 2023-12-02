@@ -11,6 +11,7 @@ import { setCount } from '@renderer/state/local'
  *  显示投递次数图表与回复率图表 (优先级最低，略微麻烦)
  */
 
+// TODO fix 投递上限时停止投递
 const InfoMain = defineComponent({
   setup(props, { slots }) {
     const ipc = window.electron.ipcRenderer

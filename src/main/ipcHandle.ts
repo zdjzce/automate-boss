@@ -22,6 +22,7 @@ export const updateState = async (event, ...args) => {
 }
 
 export const createNewWindow = async (app: Electron.App, mainWindow: BrowserWindow) => {
+  console.log('state:', state)
   const { executablePath } = state
 
   ;(async () => {

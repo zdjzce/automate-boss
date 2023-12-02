@@ -35,9 +35,9 @@ export const createNewWindow = async (app: Electron.App, mainWindow: BrowserWind
 
       const page = await browser.newPage()
       page.setViewport({
-        width: 1280,
-        height: 720,
-        deviceScaleFactor: 0.5
+        width: 1920,
+        height: 1080,
+        deviceScaleFactor: 1
       })
 
       await page.goto('https://www.zhipin.com/web/geek/job-recommend?ka=header-job-recommend')

@@ -124,22 +124,30 @@ const getMessageCount = async (page: Page) => {
 
 // 岗位详情页逻辑
 const newPageHandler = async (newPage: Page) => {
-  const immediately = await getXEle(
-    newPage,
-    '//*[@id="main"]/div[1]/div/div/div[1]/div[3]/div[1]/a[2]',
-    10000
-  )
-  await newPage.evaluate((ele) => {
-    ele.click()
-  }, immediately)
-
-  await setTimeout(1500)
-
-  const continueEle = await getXEle(newPage, '/html/body/div[11]/div[2]/div[3]/div/span[1]', 3000)
-  if (continueEle) {
+  try {
+    const immediately = await getXEle(
+      newPage,
+      '//*[@id="main"]/div[1]/div/div/div[1]/div[3]/div[1]/a[2]',
+      2000
+    )
     await newPage.evaluate((ele) => {
       ele.click()
-    }, continueEle)
+    }, immediately)
+  } catch (err) {
+    console.log('err:', err)
+  }
+
+  await setTimeout(1500)
+  try {
+    const continueEle = await getXEle(newPage, '/html/body/div[11]/div[2]/div[3]/div/span[1]', 3000)
+
+    if (continueEle) {
+      await newPage.evaluate((ele) => {
+        ele.click()
+      }, continueEle)
+    }
+  } catch (error) {
+    console.log('error:', error)
   }
 
   mainWindow.webContents.send('Count')

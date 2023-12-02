@@ -133,6 +133,8 @@ const newPageHandler = async (newPage: Page) => {
     ele.click()
   }, immediately)
 
+  await setTimeout(1500)
+
   const continueEle = await getXEle(newPage, '/html/body/div[11]/div[2]/div[3]/div/span[1]', 3000)
   if (continueEle) {
     await newPage.evaluate((ele) => {

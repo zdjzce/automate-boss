@@ -77,20 +77,22 @@ const startChat = async (page: Page, state: State) => {
 
     await page.evaluate((liItem) => {
       const text = liItem.querySelector('.job-name')?.textContent
-      console.log('text:', text)
       liItem.click()
     }, item)
 
     const jobInfo = await item.$('.job-name')
-    console.log('jobInfo:', jobInfo)
 
     if (state.ignoreJobKeyword) {
       const textRes = await page.evaluate((el) => el?.textContent, jobInfo)
 
-      console.log('jobInfo:', textRes)
       const keywords = state.ignoreJobKeyword.split(',')
-      console.log('keywords:', keywords)
       if (keywords.some((item) => textRes?.indexOf(item) >= 0)) continue
+    }
+
+    const instant = await checkIsInstant(page)
+    if (instant) {
+      console.log('instant=====:', instant)
+      continue
     }
 
     const readMore = await getXEle(
@@ -183,4 +185,14 @@ export async function elementHasClass(element, className) {
 const getXEle = async (page: Page, xpath: string, timeOut?: number, handler?: () => void) => {
   const ele = await page.waitForXPath(xpath, { timeout: timeOut || 1000 })
   return ele
+}
+
+const checkIsInstant = async (page: Page) => {
+  const instantBtn = await getXEle(
+    page,
+    '//*[@id="wrap"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/a[2]'
+  )
+  const instant = await page.evaluate((el) => el?.textContent, instantBtn)
+
+  return instant && instant.indexOf('继续沟通') >= 0
 }

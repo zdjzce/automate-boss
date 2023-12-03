@@ -95,12 +95,18 @@ const InfoMain = defineComponent({
             </span>
           </div>
           <div>
-            2. 首次启动需要登录账号，关闭后再启动即可(如果错误提示信息为Failed to launch the browser
+            2. 首次启动需要登录账号，关闭后再启动即可(如果 mac 错误提示信息为Failed to launch the browser
             process!{' '}
             <span class="text-[#8B5CB7]  ml-[3px]" style="word-break: break-all;">
               那么需要完全关闭浏览器进程，或重启软件
             </span>
             )
+          </div>
+          <div>
+            3. 不建议筛选太多选项
+            <span class="text-[#8B5CB7]  ml-[3px]" style="word-break: break-all;">
+              否则容易总是返回一样的岗位列表
+            </span>
           </div>
         </Card>
 

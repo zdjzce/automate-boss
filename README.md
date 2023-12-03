@@ -1,52 +1,23 @@
 ## 项目介绍
+Boss 直聘快速打招呼，可筛选条件。此脚本已迁移至 Electron + Puppeteer 客户端，目前经简单的测试，**windows 与 mac 皆可用**，linux 未知应该也可以。
+![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/automate.gif)
+
+### 使用方法：
+
+1. 一定要输入  Chrome 程序路径。方法：打开你的 Chrome，然后在地址栏输入 **chrome://version**，然后复制红框中的路径填入文本框即可。
+   ![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/path.jpg)
+
+2. 不建议筛选太多选项, 否则容易返回一样的岗位列表（不过会对已经沟通过的岗位进行过滤）
+
+3. 忽略的岗位多个需要用英文逗号分隔。
+
+4. 薪资待遇选项填入后，在 boss 中会直接进行薪资待遇的筛选，投递的岗位完全是按照岗位列表中的 item 进行投递，所以返回的 item 如果有超出预期或低于预期薪资的情况也会投递。
+### 如果遇到了停止的状况
+1. mac：如果是登录后再次启动，发现没有进行操作，建议关闭 chrome 的浏览器测试进程（调度中心可能开启了多个 chrome 关掉后面那个）
 
 
-此脚本迁移 Electron + Puppeteer 客户端中，预计 2023.12.3 即可完成
 
-——————————————————————————————————
-
-
-BOSS海投自动打招呼脚本，只需简单的更改即可使用。
-效果如下：  
-![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/自动投递.gif)
-## 如何使用
-1. 克隆项目，安装依赖。
-   需要的依赖：
-   1. Python3：如果没有 Python3 请移步官网进行下载。版本为^3.11。https://www.python.org/downloads/
-   2. Chrome 浏览器最新版：https://www.google.com/chrome/
-   3. 装好 Python3 以及 Chrome 后在项目中运行如下命令：
-   ```
-    pip install poetry
-    poetry install
-   ```
-2. 在 main.py 中把第15行代码进行注释，这是必要的，方法中使用的文件夹为登录状态后的文件夹。
-   ```
-   # options.add_argument(
-   #  "user-data-dir=C:\\Program Files (x86)\\scoped_dir15408_969916617")
-   ```
-   在 main.py 中把第29行代码进行注释，否则会一直滑动到底部，登录不上账号。
-   ```
-   # time.sleep(2)
-   ```
-3. 运行 main.py
-   ```
-   poetry run python main.py
-   ```
-  在打开的BOSS直聘页面中进行登录。登录完毕以后请勿关闭浏览器窗口。 
-
-4. 在浏览器中新建一个标签页，输入 chrome://version，打开页面后复制个人资料路径。  
-   ![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/info-dir.jpg)  
-
-   将复制的路径黏贴到代码第十五行中的路径。把数字后面的路径都删除掉。  
-
-   如图：![image text](https://raw.githubusercontent.com/zdjzce923/automate-boss/main/img-folder/delete.jpg)
-   同时把注释关掉
-   ```
-   options.add_argument("user-data-dir=把复制的路径放在这里") 
-   ```
-   把 29 行 time.sleep 中注释也关掉。
-5. 重新运行 poetry run python main.py。发现已经登录且页面开始自动滚动，即成功。
-6. 运行后如果发现没有成功登录，请从第二步开始重新执行。
-
-## TODO
-1. 优化为简单的客户端，输入手机号与验证码点击按钮即可使用。
+### TODO
+1. 设置多时间段间隔投递
+2. 看板增加近七日、近三十日沟通次数
+3. 筛选增加指定岗位投递（目前是按照推荐岗位进行投递）

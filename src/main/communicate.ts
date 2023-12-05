@@ -41,6 +41,9 @@ const scrollJobList = async (page: Page) => {
 // 筛选填入的选项
 const filterOptions = async (page: Page, state: State) => {
   const ele = await page.$$('.condition-filter-select')
+  const recommend = await getXEle(page, '//*[@id="wrap"]/div[2]/div[1]/div/div[1]/a[3]')
+  await recommend?.click()
+
   console.log('ele:', ele)
 
   for (const item of ele) {
